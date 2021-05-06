@@ -39,14 +39,23 @@ def get_pdf_url(soup, target_title=TARGET_TABLE_ROW_TITLE ):
     table_data = table_body.find("td", string=target_title)
     table_row = componente_organizationl_data.parent
     anchor_tag = componente_organizationl_row.find("a")
-    
+
     return anchor_tag["href"]
+
+def save_pdf(pdf_content):
+    with open("./component_organizacional/component_organizacional.pdf", "wb") as f:
+        pathlib.Path('/my/directory').mkdir(parents=True, exist_ok=True)
+        f.write(pdf_content)
 
 
 def download_pdf(download_enpoint):
     request_url = get_request_url(download_enpoint)
     content = get_request_content(request_url)
     soup = get_soup_instance(content)
+    pdf_endpoint = get_pdf_url(soup)
+    download_url = get_request_url(pdf_endpoint)
+    pdf_content = get_request_content(download_url)
+    save_pdf(pdf_content)
 
 
 def main():
