@@ -23,7 +23,8 @@ def get_download_url(base_url = BASE_URL):
     request_url = get_request_url(TISS_ENDPOINT_URL)
     content = get_request_content(request_url)
 
-    get_anchor_by_header_title("Padrão TISS – Versão", content)
+    anchor_tag = get_anchor_by_header_title("Padrão TISS – Versão", content)
+    return anchor_tag["href"]
 
 def main():
     get_download_url()
