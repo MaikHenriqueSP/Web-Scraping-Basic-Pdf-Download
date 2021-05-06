@@ -39,11 +39,12 @@ def get_anchor_by_header_title(header_title, content):
 '''
     Args:
         base_url (string): Url the will be requests withing the target endpoint
+        target_section_title (string): Target section title which will be looked for
     Returns:
         download_url (string): The endpoint of the download page
 
 '''
-def get_download_url(base_url = BASE_URL):    
+def get_download_url(base_url = BASE_URL, target_section_title=TARGET_SECTION_TITLE):    
     request_url = get_request_url(BASE_URL, TISS_ENDPOINT_URL)
     content = get_request_content(request_url)
     anchor_tag = get_anchor_by_header_title(TARGET_SECTION_TITLE, content)
