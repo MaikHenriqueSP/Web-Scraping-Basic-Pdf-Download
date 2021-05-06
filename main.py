@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pathlib
+import re
 
 BASE_URL = "http://www.ans.gov.br"
 TISS_ENDPOINT_URL = "/prestadores/tiss-troca-de-informacao-de-saude-suplementar"
@@ -37,14 +38,22 @@ def get_pdf_url(soup, target_title=TARGET_TABLE_ROW_TITLE ):
     table_container_div = soup.find("div", class_="table-responsive")
     table_body = table_container_div.table.tbody
     table_data = table_body.find("td", string=target_title)
-    table_row = componente_organizationl_data.parent
-    anchor_tag = componente_organizationl_row.find("a")
+    table_row = table_data.parent
+    anchor_tag = table_row.find("a")
 
     return anchor_tag["href"]
 
+def create_folder_if_not_exists(path):
+    pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+
 def save_pdf(pdf_content):
-    with open("./component_organizacional/component_organizacional.pdf", "wb") as f:
-        pathlib.Path('/my/directory').mkdir(parents=True, exist_ok=True)
+    folder_path = "./component_organizacional"
+    file_name = "component_organizacional.pdf"
+    file_path = f'''{folder_path}/{file_name}'''
+   
+    create_folder_if_not_exists(folder_path)
+    with open(file_path, "wb") as f:
+        print(file_path)
         f.write(pdf_content)
 
 
