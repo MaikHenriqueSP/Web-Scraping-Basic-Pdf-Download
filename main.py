@@ -18,7 +18,7 @@ Attributes:
 BASE_URL = "http://www.ans.gov.br"
 TISS_ENDPOINT_URL = "/prestadores/tiss-troca-de-informacao-de-saude-suplementar"
 TARGET_TABLE_ROW_TITLE = "Componente Organizacional"
-
+TARGET_SECTION_TITLE = "Padrão TISS – Versão"
 
 '''
     Args:
@@ -46,7 +46,7 @@ def get_anchor_by_header_title(header_title, content):
 def get_download_url(base_url = BASE_URL):    
     request_url = get_request_url(BASE_URL, TISS_ENDPOINT_URL)
     content = get_request_content(request_url)
-    anchor_tag = get_anchor_by_header_title("Padrão TISS – Versão", content)
+    anchor_tag = get_anchor_by_header_title(TARGET_SECTION_TITLE, content)
 
     return anchor_tag["href"]
 
