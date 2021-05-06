@@ -13,7 +13,7 @@ def get_request_url(end_point_url):
     return f'''{BASE_URL}{end_point_url}'''
 
 def get_anchor_by_header_title(header_title, content):
-    soup = BeautifulSoup(content, "html.parser")
+    soup = get_soup_instance(content)
     content_container = soup.find("div", class_= "item_page")
     header = soup.find("h2", string=re.compile(header_title))
     sibling_container = header.find_next_sibling("div", class_="alert alert-icolink")
@@ -26,8 +26,17 @@ def get_download_url(base_url = BASE_URL):
     anchor_tag = get_anchor_by_header_title("Padrão TISS – Versão", content)
     return anchor_tag["href"]
 
+def get_soup_instance(content):
+    soup = BeautifulSoup(content, "html.parser")
+    return soup
+
+def download_pdf(download_enpoint):
+    get_request_url(download_enpoint)
+
+
 def main():
-    get_download_url()
+    download_endpoint_url = get_download_url()
+    download_pdf(download_endpoint_url)
     
 
 if __name__ == "__main__":
